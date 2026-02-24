@@ -925,6 +925,13 @@ class GameView extends View implements Choreographer.FrameCallback {
                 birdY = (systemBarTop + (getPlayableHeight() - groundHeight) / 2f) + (float) (Math.sin(System.currentTimeMillis() / 200.0) * 6 * scale);
                 if (settingUpsideDownEnabled) birdY = screenHeight - birdY;
                 birdRotation = 0;
+    
+                if (!showTap && !isTapFading && tutorialTapBitmap != null) {
+                    showTap = true;
+                    tapAlpha = 1.0f;
+                    tapX = (screenWidth - tutorialTapBitmap.getWidth()) / 2f;
+                    tapY = (screenHeight - tutorialTapBitmap.getHeight()) / 2f;
+                }
                 break;
             case GAME_OVER:
                 float groundTopY = screenHeight - systemBarBottom - groundHeight;
