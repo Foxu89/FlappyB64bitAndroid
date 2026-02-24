@@ -1904,6 +1904,7 @@ class GameView extends View implements Choreographer.FrameCallback {
         unscaledTextGameOver = extract(atlas, loc(0.765625, ATLAS_WIDTH), loc(0.11328125, ATLAS_HEIGHT), 204, 54);
         unscaledScorePanel = extract(atlas, loc(0.0, ATLAS_WIDTH), loc(0.50390625, ATLAS_HEIGHT), 238, 126);
         unscaledButtonPlay = extract(atlas, loc(0.6855469, ATLAS_WIDTH), loc(0.22851562, ATLAS_HEIGHT), 116, 70);
+        unscaledTutorialTap = extract(atlas, loc(0.5703125, ATLAS_WIDTH), loc(0.17773438, ATLAS_HEIGHT), 114, 98);
 
         int settingsResId = getResources().getIdentifier("settingsbutton", "drawable", getContext().getPackageName());
         if (settingsResId != 0) unscaledButtonSettings = BitmapFactory.decodeResource(getResources(), settingsResId, options);
@@ -1957,6 +1958,7 @@ class GameView extends View implements Choreographer.FrameCallback {
         scoreButtonBitmap = scaleBitmap(unscaledButtonScore); getReadyBitmap = scaleBitmap(unscaledTextReady);
         gameOverBitmap = scaleBitmap(unscaledTextGameOver); scorePanelBitmap = scaleBitmap(unscaledScorePanel);
         playButtonBitmap = scaleBitmap(unscaledButtonPlay);
+        tutorialTapBitmap = scaleBitmap(unscaledTutorialTap);
         if (unscaledButtonSettings != null) {
             int newW = (int) (unscaledButtonSettings.getWidth() * scale * SETTINGS_BUTTON_SCALE_MULTIPLIER);
             int newH = (int) (unscaledButtonSettings.getHeight() * scale * SETTINGS_BUTTON_SCALE_MULTIPLIER);
