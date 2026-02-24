@@ -129,6 +129,7 @@ class GameView extends View implements Choreographer.FrameCallback {
     private Bitmap unscaledTextReady, unscaledTextGameOver, unscaledScorePanel, unscaledButtonPlay, unscaledButtonScore, unscaledTitle, unscaledCopyright, unscaledButtonSettings;
     private Bitmap[] unscaledMedalsBitmaps = new Bitmap[4];
     private Bitmap[] unscaledNumberBitmaps = new Bitmap[10];
+    private Bitmap unscaledTutorialTap;
     
     private Bitmap bgDayBitmap, bgNightBitmap, groundBitmap;
     private Bitmap pipeUpBitmap, pipeDownBitmap;
@@ -140,6 +141,7 @@ class GameView extends View implements Choreographer.FrameCallback {
     private Bitmap currentMedalBitmap;
     private Bitmap[] numberBitmaps = new Bitmap[10];
     private Bitmap[] smallNumberBitmaps = new Bitmap[10];
+    private Bitmap tutorialTapBitmap;
 
     // Physics variables
     private int birdFrame = 0;
