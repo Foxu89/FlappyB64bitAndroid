@@ -44,3 +44,97 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
 }
+
+// ============================================================
+// TASK PER FIXARE I NOMI DEI FILE E I RIFERIMENTI (Java + XML)
+// ============================================================
+task fixResourceNames {
+    doLast {
+        println "\n🔧 INIZIO FIX RISORSE..."
+        
+        // Mappa dei vecchi nomi -> nuovi nomi (SOLO quelli con trattini)
+        def renameMap = [
+            'yellowbird-upflap'  : 'yellowbird_upflap',
+            'yellowbird-midflap' : 'yellowbird_midflap',
+            'yellowbird-downflap': 'yellowbird_downflap',
+            'bluebird-upflap'    : 'bluebird_upflap',
+            'bluebird-midflap'   : 'bluebird_midflap',
+            'bluebird-downflap'  : 'bluebird_downflap',
+            'redbird-upflap'     : 'redbird_upflap',
+            'redbird-midflap'    : 'redbird_midflap',
+            'redbird-downflap'   : 'redbird_downflap',
+            'pipe-green'         : 'pipe_green'
+            // 'settingsbutton' NON va incluso perché non ha trattini
+        ]
+        
+        // 1. RINOMINA FILE PNG in drawable
+        println "\n📁 Rinomino file in drawable..."
+        def drawableDir = file('src/main/res/drawable')
+        if (drawableDir.exists()) {
+            fileTree(dir: drawableDir, include: ['*.png']).each { file ->
+                def oldName = file.name - '.png'
+                if (renameMap.containsKey(oldName)) {
+                    def newName = renameMap[oldName] + '.png'
+                    def newFile = new File(file.parentFile, newName)
+                    if (!newFile.exists()) {
+                        file.renameTo(newFile)
+                        println "   ✅ ${oldName}.png -> ${newName}"
+                    }
+                }
+            }
+        }
+        
+        // 2. AGGIORNA FILE JAVA
+        println "\n📝 Aggiorno file Java..."
+        fileTree(dir: 'src/main/java', include: ['**/*.java']).each { javaFile ->
+            def content = javaFile.text
+            def modified = false
+            
+            renameMap.each { oldName, newName ->
+                // R.drawable.nome
+                if (content.contains("R.drawable.${oldName}")) {
+                    content = content.replace("R.drawable.${oldName}", "R.drawable.${newName}")
+                    println "   🔄 ${javaFile.name}: R.drawable.${oldName} -> R.drawable.${newName}"
+                    modified = true
+                }
+                // Stringhe tipo "nome"
+                if (content.contains("\"${oldName}\"")) {
+                    content = content.replace("\"${oldName}\"", "\"${newName}\"")
+                    println "   🔄 ${javaFile.name}: \"${oldName}\" -> \"${newName}\""
+                    modified = true
+                }
+            }
+            
+            if (modified) {
+                javaFile.write(content)
+            }
+        }
+        
+        // 3. AGGIORNA FILE XML LAYOUT
+        println "\n📝 Aggiorno file XML layout..."
+        def layoutDir = file('src/main/res/layout')
+        if (layoutDir.exists()) {
+            fileTree(dir: layoutDir, include: ['*.xml']).each { xmlFile ->
+                def content = xmlFile.text
+                def modified = false
+                
+                renameMap.each { oldName, newName ->
+                    if (content.contains("@drawable/${oldName}")) {
+                        content = content.replace("@drawable/${oldName}", "@drawable/${newName}")
+                        println "   🔄 ${xmlFile.name}: @drawable/${oldName} -> @drawable/${newName}"
+                        modified = true
+                    }
+                }
+                
+                if (modified) {
+                    xmlFile.write(content)
+                }
+            }
+        }
+        
+        println "\n🎉 FIX COMPLETATO!"
+    }
+}
+
+// Esegui il task PRIMA della compilazione
+preBuild.dependsOn fixResourceNames
