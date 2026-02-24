@@ -1151,15 +1151,16 @@ class GameView extends View implements Choreographer.FrameCallback {
         }
         
         if (gameState == GameState.PLAYING) { checkCollisions(); }
-    if (isTapFading) {
-        long elapsed = System.currentTimeMillis() - tapFadeStartTime;
-        tapAlpha = 1.0f - (float) elapsed / TAP_FADE_DURATION_MS;
-        if (tapAlpha <= 0) {
-            tapAlpha = 0;
-            showTap = false;
-            isTapFading = false;
+        
+        if (isTapFading) {
+            long elapsed = System.currentTimeMillis() - tapFadeStartTime;
+            tapAlpha = 1.0f - (float) elapsed / TAP_FADE_DURATION_MS;
+            if (tapAlpha <= 0) {
+                tapAlpha = 0;
+                showTap = false;
+                isTapFading = false;
+            }
         }
-    }
         
     }
     
