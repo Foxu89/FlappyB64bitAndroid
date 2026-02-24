@@ -1538,6 +1538,10 @@ class GameView extends View implements Choreographer.FrameCallback {
                         settingsButtonTargetScale = 0.85f;
                     }
                 } else if (gameState == GameState.WAITING) {
+                    if (showTap) {
+                        isTapFading = true;
+                        tapFadeStartTime = System.currentTimeMillis();
+                    }
                     gameState = GameState.PLAYING;
                     updateWeatherSounds();
                     if (!settingJetpackModeEnabled) flap();
