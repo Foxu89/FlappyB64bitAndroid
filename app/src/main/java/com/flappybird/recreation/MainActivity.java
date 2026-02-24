@@ -413,6 +413,9 @@ class GameView extends View implements Choreographer.FrameCallback {
         weatherSystem = new WeatherSystem();
         
         sparkleBitmap = createSparkleBitmap();
+        tapPaint = new Paint();
+        tapPaint.setFilterBitmap(false);
+        tapPaint.setAntiAlias(false);
     }
     
     private Bitmap createSparkleBitmap() {
@@ -613,6 +616,11 @@ class GameView extends View implements Choreographer.FrameCallback {
         
         sparkleTimer = 0f;
         isSparkleAnimating = false;
+
+        // Reset tap tap
+        showTap = false;
+        tapAlpha = 1.0f;
+        isTapFading = false;
 
         if (!settingDynamicDayNightEnabled) {
             if (settingBackground == 0) backgroundBitmap = bgDayBitmap;
