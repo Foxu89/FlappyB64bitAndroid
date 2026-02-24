@@ -1465,6 +1465,11 @@ class GameView extends View implements Choreographer.FrameCallback {
 
         // --- END CAMERA TRANSFORM ---
         canvas.restore();
+        if (showTap && tutorialTapBitmap != null) {
+            tapPaint.setAlpha((int) (tapAlpha * 255));
+            canvas.drawBitmap(tutorialTapBitmap, tapX, tapY, tapPaint);
+            tapPaint.setAlpha(255);
+        }
         
         // --- UI (DRAWN IN SCREEN SPACE - NO ZOOM) ---
 
